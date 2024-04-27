@@ -1,28 +1,28 @@
-import { AnimationHandles, AnimationOptions, ParticleOptions } from "./types";
+import { AnimHandles, AnimOptions, PtfxOptions } from "./types";
 
-export function getHandles(): AnimationHandles {
+export function getHandles(): AnimHandles {
   return globalThis.exports["immersive-animations"].getHandles();
 }
 
-export function setHandles(handles: AnimationHandles) {
+export function setHandles(handles: AnimHandles) {
   return globalThis.exports["immersive-animations"].setHandles(handles);
 }
 
 export function attachPtfx(
   propHandle: number,
-  options: ParticleOptions
-): AnimationHandles {
+  options: PtfxOptions
+): AnimHandles {
   return globalThis.exports["immersive-animations"].attachPtfx(
     propHandle,
     options
   );
 }
 
-export function detatchPtfx(handles: AnimationHandles): AnimationHandles {
-  return globalThis.exports["immersive-animations"].detatchPtfx(handles);
+export function detachPtfx(handles: AnimHandles): AnimHandles {
+  return globalThis.exports["immersive-animations"].detachPtfx(handles);
 }
 
-export function getEmotes(): Map<string, AnimationOptions> {
+export function getEmotes() {
   return globalThis.exports["immersive-animations"].getEmotes();
 }
 
@@ -30,6 +30,6 @@ export function hasEmote(key: string): boolean {
   return globalThis.exports["immersive-animations"].hasEmote(key);
 }
 
-export function addEmote(key: string, value: AnimationOptions): boolean {
+export function addEmote(key: string, value: AnimOptions): boolean {
   return globalThis.exports["immersive-animations"].addEmote(key, value);
 }

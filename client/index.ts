@@ -1,26 +1,24 @@
 import {
   addEmote,
   attachPtfx,
-  detatchPtfx,
+  detachPtfx,
   getEmotes,
   getHandles,
 } from "./lib/immersive-animations";
 import {
-  AnimationFlags,
-  AnimationOptions,
+  AnimFlags,
+  AnimOptions,
   PedBoneId,
 } from "./lib/immersive-animations/types";
 
-const torchEmotes: { [key: string]: AnimationOptions } = {
+const torchEmotes: { [key: string]: AnimOptions } = {
   // For use with "prop_survival_torch2" that doesn't have a particle fx extension on the archetype definition
   torch: {
     dictionary: "anim@heists@humane_labs@finale@keycards",
     name: "ped_b_enter_loop",
     type: "single",
     flag:
-      AnimationFlags.AF_LOOPING +
-      AnimationFlags.AF_UPPERBODY +
-      AnimationFlags.AF_SECONDARY,
+      AnimFlags.AF_LOOPING + AnimFlags.AF_UPPERBODY + AnimFlags.AF_SECONDARY,
     prop: {
       model: "prop_survival_torch2",
       bone: PedBoneId.PH_R_Hand,
@@ -42,9 +40,7 @@ const torchEmotes: { [key: string]: AnimationOptions } = {
     name: "ped_b_enter_loop",
     type: "single",
     flag:
-      AnimationFlags.AF_LOOPING +
-      AnimationFlags.AF_UPPERBODY +
-      AnimationFlags.AF_SECONDARY,
+      AnimFlags.AF_LOOPING + AnimFlags.AF_UPPERBODY + AnimFlags.AF_SECONDARY,
     prop: {
       model: "survival_torch",
       bone: PedBoneId.PH_R_Hand,
@@ -54,7 +50,7 @@ const torchEmotes: { [key: string]: AnimationOptions } = {
   },
 };
 
-// Add emotes to animation resource
+// Register torch emotes with animation resource
 
 for (const key in torchEmotes) {
   if (Object.prototype.hasOwnProperty.call(torchEmotes, key)) {
@@ -62,17 +58,15 @@ for (const key in torchEmotes) {
   }
 }
 
-console.log(Array.from(getEmotes().entries()));
+console.log(getEmotes());
 
-// Example of turning torch on and off
-
-let handles = getHandles();
+// Examples of turning torch on and off
 
 RegisterCommand(
   "torch:on",
   () => {
-    if (!handles.particle) {
-      handles = attachPtfx(handles.prop, torchEmotes["torch"].prop?.particle!);
+    if (!getHandles().particle) {
+      attachPtfx(getHandles().prop, torchEmotes["torch"].prop?.particle!);
     }
   },
   false
@@ -81,8 +75,8 @@ RegisterCommand(
 RegisterCommand(
   "torch:off",
   () => {
-    if (handles.particle) {
-      handles = detatchPtfx(handles);
+    if (getHandles().particle) {
+      detachPtfx(getHandles());
     }
   },
   false
@@ -90,9 +84,13 @@ RegisterCommand(
 
 setTick(() => {
   if (IsControlJustPressed(0, 174)) {
-    attachPtfx(handles.prop, torchEmotes["torch"].prop?.particle!);
+    if (!getHandles().particle) {
+      attachPtfx(getHandles().prop, torchEmotes["torch"].prop?.particle!);
+    }
   } else if (IsControlJustPressed(0, 175)) {
-    detatchPtfx(handles);
+    if (getHandles().particle) {
+      detachPtfx(getHandles());
+    }
   }
 });
 
