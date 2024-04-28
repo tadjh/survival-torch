@@ -58,8 +58,6 @@ for (const key in torchEmotes) {
   }
 }
 
-console.log(getEmotes());
-
 // Examples of turning torch on and off
 
 RegisterCommand(
