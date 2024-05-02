@@ -12,7 +12,8 @@ import {
 } from "./lib/immersive-animations/types";
 
 const torchEmotes: { [key: string]: AnimOptions } = {
-  // For use with "prop_survival_torch2" that doesn't have a particle fx extension on the archetype definition
+  // For use with "prop_survival_torch" that doesn't have a particle fx extension on the archetype definition
+  // My custom animation library handles spawning the particle effect to allow players to extinguish the torch
   torch: {
     dictionary: "anim@heists@humane_labs@finale@keycards",
     name: "ped_b_enter_loop",
@@ -20,7 +21,7 @@ const torchEmotes: { [key: string]: AnimOptions } = {
     flag:
       AnimFlags.AF_LOOPING + AnimFlags.AF_UPPERBODY + AnimFlags.AF_SECONDARY,
     prop: {
-      model: "prop_survival_torch2",
+      model: "prop_survival_torch",
       bone: PedBoneId.PH_R_Hand,
       pos: { x: -0.27, y: 1.05, z: 0.59 },
       rot: { x: 120.0, y: 10.0, z: 0.0 },
@@ -30,7 +31,7 @@ const torchEmotes: { [key: string]: AnimOptions } = {
         offset: { x: 0.0, y: 0.0, z: 2.0 },
         rotation: { x: 0.0, y: 0.0, z: 0.0 },
         scale: 1.0,
-        lock: { x: false, y: false, z: false },
+        invert: { x: false, y: false, z: false },
       },
     },
   },
@@ -42,7 +43,7 @@ const torchEmotes: { [key: string]: AnimOptions } = {
     flag:
       AnimFlags.AF_LOOPING + AnimFlags.AF_UPPERBODY + AnimFlags.AF_SECONDARY,
     prop: {
-      model: "survival_torch",
+      model: "prop_survival_torch2",
       bone: PedBoneId.PH_R_Hand,
       pos: { x: -0.27, y: 1.05, z: 0.59 },
       rot: { x: 120.0, y: 10.0, z: 0.0 },
