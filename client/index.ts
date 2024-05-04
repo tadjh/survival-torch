@@ -2,11 +2,11 @@ import {
   addEmote,
   attachPtfx,
   detachPtfx,
-  getEmotes,
   getHandles,
 } from "./lib/immersive-animations";
 import {
   AnimFlags,
+  AnimHandles,
   AnimOptions,
   PedBoneId,
 } from "./lib/immersive-animations/types";
@@ -27,7 +27,7 @@ const torchEmotes: { [key: string]: AnimOptions } = {
       rot: { x: 120.0, y: 10.0, z: 0.0 },
       particle: {
         asset: "core",
-        particle: "ent_amb_torch_fire",
+        name: "ent_amb_torch_fire",
         offset: { x: 0.0, y: 0.0, z: 2.0 },
         rotation: { x: 0.0, y: 0.0, z: 0.0 },
         scale: 1.0,
@@ -61,35 +61,27 @@ for (const key in torchEmotes) {
 
 // Examples of turning torch on and off
 
-RegisterCommand(
-  "torch:on",
-  () => {
-    if (!getHandles().particle) {
-      attachPtfx(getHandles().prop, torchEmotes["torch"].prop?.particle!);
-    }
-  },
-  false
-);
+function findTorchAndTurnOn() {
+  if (!getHandles().particleHandle) {
+    attachPtfx(getHandles().propHandle, torchEmotes["torch"].prop!.particle!);
+  }
+}
 
-RegisterCommand(
-  "torch:off",
-  () => {
-    if (getHandles().particle) {
-      detachPtfx(getHandles());
-    }
-  },
-  false
-);
+function findTorchAndTurnOff() {
+  if (getHandles().particleHandle) {
+    detachPtfx(getHandles());
+  }
+}
+
+RegisterCommand("torch:on", findTorchAndTurnOn, false);
+
+RegisterCommand("torch:off", findTorchAndTurnOff, false);
 
 setTick(() => {
   if (IsControlJustPressed(0, 174)) {
-    if (!getHandles().particle) {
-      attachPtfx(getHandles().prop, torchEmotes["torch"].prop?.particle!);
-    }
+    findTorchAndTurnOn();
   } else if (IsControlJustPressed(0, 175)) {
-    if (getHandles().particle) {
-      detachPtfx(getHandles());
-    }
+    findTorchAndTurnOff();
   }
 });
 

@@ -1,28 +1,36 @@
-import { AnimHandles, AnimOptions, PtfxOptions } from "./types";
+import {
+  AnimHandles,
+  AnimOptions,
+  ParticleHandles,
+  PropHandles,
+  PtfxOptions,
+} from "./types";
 
 export function getHandles(): AnimHandles {
   return globalThis.exports["immersive-animations"].getHandles();
 }
 
-export function setHandles(handles: AnimHandles) {
-  return globalThis.exports["immersive-animations"].setHandles(handles);
+export function setHandles(nextHandles: Partial<AnimHandles>) {
+  return globalThis.exports["immersive-animations"].setHandles(nextHandles);
 }
 
-export function attachPtfx(
+export async function attachPtfx(
   propHandle: number,
   options: PtfxOptions
-): AnimHandles {
+): Promise<ParticleHandles | false> {
   return globalThis.exports["immersive-animations"].attachPtfx(
     propHandle,
     options
   );
 }
 
-export function detachPtfx(handles: AnimHandles): AnimHandles {
-  return globalThis.exports["immersive-animations"].detachPtfx(handles);
+export function detachPtfx(
+  prevHandles: Omit<PropHandles, "propModel">
+): ParticleHandles | false {
+  return globalThis.exports["immersive-animations"].detachPtfx(prevHandles);
 }
 
-export function getEmotes() {
+export function getEmotes(): string {
   return globalThis.exports["immersive-animations"].getEmotes();
 }
 
