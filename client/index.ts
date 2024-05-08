@@ -10,6 +10,7 @@ import {
   PedBoneId,
 } from "./lib/immersive-animations/types";
 
+// TODO better animation
 const torchEmotes: { [key: string]: AnimOptions } = {
   // For use with "prop_survival_torch" that doesn't have a particle fx extension on the archetype definition
   // My custom animation library handles spawning the particle effect to allow players to extinguish the torch
@@ -34,7 +35,7 @@ const torchEmotes: { [key: string]: AnimOptions } = {
       },
     },
   },
-  // For use with "prop_survival_torch" that has a particle fx extension on the archetype definition
+  // For use with "prop_survival_torch2" that has a particle fx extension on the archetype definition
   torch2: {
     dictionary: "anim@heists@humane_labs@finale@keycards",
     name: "ped_b_enter_loop",
@@ -51,7 +52,6 @@ const torchEmotes: { [key: string]: AnimOptions } = {
 };
 
 // Register torch emotes with animation resource
-
 for (const key in torchEmotes) {
   if (Object.prototype.hasOwnProperty.call(torchEmotes, key)) {
     addEmote(key, torchEmotes[key]);
@@ -59,7 +59,6 @@ for (const key in torchEmotes) {
 }
 
 // Examples of turning torch on and off
-
 function findTorchAndTurnOn() {
   if (!getHandles().particleHandle) {
     attachPtfx(getHandles().propHandle, torchEmotes["torch"].prop!.particle!);
