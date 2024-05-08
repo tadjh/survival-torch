@@ -6,7 +6,6 @@ import {
 } from "./lib/immersive-animations";
 import {
   AnimFlags,
-  AnimHandles,
   AnimOptions,
   PedBoneId,
 } from "./lib/immersive-animations/types";
