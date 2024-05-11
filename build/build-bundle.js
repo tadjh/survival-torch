@@ -3,12 +3,12 @@ const esbuild = require("esbuild");
 const IS_WATCH_MODE = process.env.IS_WATCH_MODE;
 
 const TARGET_ENTRIES = [
-  {
-    target: "node16",
-    entryPoints: ["server/index.ts"],
-    platform: "node",
-    outfile: "./dist/server/index.js",
-  },
+  // {
+  //   target: "node16",
+  //   entryPoints: ["server/index.ts"],
+  //   platform: "node",
+  //   outfile: "./dist/server/index.js",
+  // },
   {
     target: "es2020",
     entryPoints: ["client/index.ts"],

@@ -10,14 +10,13 @@ import {
   PedBoneId,
 } from "./lib/immersive-animations/types";
 
-// TODO better animation
+// TODO better animation pls
 const torchEmotes: { [key: string]: AnimOptions } = {
   // For use with "prop_survival_torch" that doesn't have a particle fx extension on the archetype definition
   // My custom animation library handles spawning the particle effect to allow players to extinguish the torch
   torch: {
     dictionary: "anim@heists@humane_labs@finale@keycards",
     name: "ped_b_enter_loop",
-    type: "single",
     flag:
       AnimFlags.AF_LOOPING + AnimFlags.AF_UPPERBODY + AnimFlags.AF_SECONDARY,
     prop: {
@@ -39,7 +38,6 @@ const torchEmotes: { [key: string]: AnimOptions } = {
   torch2: {
     dictionary: "anim@heists@humane_labs@finale@keycards",
     name: "ped_b_enter_loop",
-    type: "single",
     flag:
       AnimFlags.AF_LOOPING + AnimFlags.AF_UPPERBODY + AnimFlags.AF_SECONDARY,
     prop: {
@@ -67,7 +65,12 @@ function findTorchAndTurnOn() {
 
 function findTorchAndTurnOff() {
   if (getHandles().particleHandle) {
-    detachPtfx(getHandles());
+    const handles = getHandles();
+    detachPtfx({
+      particleHandle: handles.particleHandle,
+      particleName: handles.particleName,
+      propHandle: handles.propHandle,
+    });
   }
 }
 
@@ -75,6 +78,7 @@ RegisterCommand("torch:on", findTorchAndTurnOn, false);
 
 RegisterCommand("torch:off", findTorchAndTurnOff, false);
 
+// TODO Remove in production
 setTick(() => {
   if (IsControlJustPressed(0, 174)) {
     findTorchAndTurnOn();
